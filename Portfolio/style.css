@@ -164,6 +164,7 @@ span{
 
 .home-img img{
     width: 28vw;
+    height: auto;
     border-radius: 50%;
     box-shadow: 0 0 25px red;
     cursor: pointer;
@@ -768,13 +769,15 @@ span{
     }
 
     nav {
-    transform: translateX(100%);
-    transition: transform 0.4s ease;
-    }
+        transform: translateX(100%);
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+      }
 
-    nav.active {
+      nav.nav-active {
         transform: translateX(0);
-    }
+        opacity: 1;
+      }
 
     .menu-btn.active i::before {
         content: '\f00d';
