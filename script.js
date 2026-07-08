@@ -62,3 +62,23 @@ navigationItems.forEach((link) => {
     navigation.classList.remove("active");
   });
 });
+
+    // Close mobile menu on link click
+    document.querySelectorAll("nav.md\\:hidden a").forEach((link) => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("nav-active");
+        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      });
+    });
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const form = event.target;
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+      if (data.name && data.email && data.message) {
+        alert("Form submitted successfully! (Note: This is a demo. No actual submission is processed.)");
+        form.reset();
+      } else {
+        alert("Please fill out all fields.");
+      }
+    }
