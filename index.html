@@ -46,6 +46,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="projects-3d.css" />
 </head>
 <body>
 
@@ -224,54 +225,12 @@
   <section class="work" id="work">
     <p class="section-label mono reveal">~/projects $ ls -la</p>
     <h2 class="section-title reveal">Selected work</h2>
-    <div class="work-grid">
-
-      <article class="card reveal">
-        <div class="card-img">
-          <img src="images/planttribe.jpg" alt="PlantTribe project" loading="lazy" />
-          <div class="card-actions">
-            <a href="#" class="card-btn" target="_blank" rel="noopener noreferrer" aria-label="Live demo"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live</a>
-            <a href="#" class="card-btn" target="_blank" rel="noopener noreferrer" aria-label="View code"><i class="fa-brands fa-github"></i> Code</a>
-          </div>
-        </div>
-        <div class="card-content">
-          <span class="card-tag mono">01 / platform</span>
-          <h3>PlantTribe</h3>
-          <p>A community-driven platform connecting plant lovers to share care tips and trade cuttings.</p>
-        </div>
-      </article>
-
-      <article class="card reveal">
-        <div class="card-img">
-          <img src="images/c&B.jpg" alt="Coffee With Backend project" loading="lazy" />
-          <div class="card-actions">
-            <a href="#" class="card-btn" target="_blank" rel="noopener noreferrer" aria-label="Live demo"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live</a>
-            <a href="#" class="card-btn" target="_blank" rel="noopener noreferrer" aria-label="View code"><i class="fa-brands fa-github"></i> Code</a>
-          </div>
-        </div>
-        <div class="card-content">
-          <span class="card-tag mono">02 / content</span>
-          <h3>Coffee With Backend</h3>
-          <p>A knowledge series breaking down backend engineering concepts for developers who build APIs.</p>
-        </div>
-      </article>
-
-      <article class="card reveal">
-        <div class="card-img">
-          <img src="images/medivault.jpg" alt="MediVault project" loading="lazy" />
-          <div class="card-actions">
-            <a href="#" class="card-btn" target="_blank" rel="noopener noreferrer" aria-label="Live demo"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live</a>
-            <a href="#" class="card-btn" target="_blank" rel="noopener noreferrer" aria-label="View code"><i class="fa-brands fa-github"></i> Code</a>
-          </div>
-        </div>
-        <div class="card-content">
-          <span class="card-tag mono">03 / healthtech</span>
-          <h3>MediVault</h3>
-          <p>A secure record system that keeps a patient's medical history in one accessible place.</p>
-        </div>
-      </article>
-
+    <div class="pj-stage" id="pjStage" aria-label="Interactive 3D map of my projects. Drag to rotate, click a project to open it.">
+      <canvas id="pjFieldCanvas" aria-hidden="true"></canvas>
+      <canvas id="pjCanvas"></canvas>
+      <p class="pj-hint mono">drag to rotate &middot; click a project to open it</p>
     </div>
+    <div class="pj-modal" id="pjModal" hidden></div>
   </section>
 
   <!-- Education -->
@@ -449,5 +408,7 @@
   </button>
 
   <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="projects-3d.js"></script>
 </body>
 </html>
