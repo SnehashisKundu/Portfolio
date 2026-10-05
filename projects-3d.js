@@ -109,8 +109,13 @@
       : `<div class="pj-shot">${project.img ? `<img src="${project.img}" alt="${project.n} screenshot">` : `<div class="pj-ph"><div class="pj-ph-in">${(project.stack.length ? project.stack : (project.langs || []).map(l => l[0])).slice(0, 8).map((t, i) => `<span style="--i:${i}">${t}</span>`).join('')}</div><p class="mono">Demo video coming soon</p></div>`}</div>`;
     const facts = project.facts.map(fact => `<div><b>${fact[1]}</b><span>${fact[0]}</span></div>`).join('');
     const LC = { TypeScript:'#3178c6', JavaScript:'#f1e05a', Python:'#3572a5', CSS:'#a06bd6' };
-    const langs = project.langs ? `<h4>Languages</h4><div class="pj-langbar">${project.langs.map(l => `<i style="--w:${l[1]}%;--c:${LC[l[0]] || '#7fb8ff'}"></i>`).join('')}</div><div class="pj-langkey">${project.langs.map(l => `<span><em style="background:${LC[l[0]] || '#7fb8ff'}"></em>${l[0]} ${l[1]}%</span>`).join('')}</div>` : '';
-    const stack = project.stack.length ? `<h4>Built with</h4><div class="pj-chips">${project.stack.map(item => `<span>${item}</span>`).join('')}</div>` : '';
+    const leaf = (text, color, i) => `<span style="--i:${i};--c:${color}">${text}</span>`;
+    let step = 0;
+    const groups = [];
+    if (project.langs) groups.push(['Languages', project.langs.map(l => leaf(`${l[0]} <small>${l[1]}%</small>`, LC[l[0]] || '#7fb8ff', step++)).join('')]);
+    if (project.stack.length) groups.push(['Built with', project.stack.map(item => leaf(item, 'var(--pj-acc)', step++)).join('')]);
+    const stack = groups.length ? `<div class="pj-tree"><div class="pt-root"><b>${project.n}</b></div><ul>${groups.map((g, gi) => `<li style="--g:${gi}"><span class="pt-node">${g[0]}</span><div class="pt-leaves">${g[1]}</div></li>`).join('')}</ul></div>` : '';
+    const langs = '';
     modal.innerHTML = `<div class="pj-card" role="dialog" aria-modal="true" aria-label="${project.n}">
       <button class="pj-close" type="button" aria-label="Close">&times;</button>
       <div class="pj-left"><span class="pj-tag mono">${project.tag || project.c}</span><h3>${project.n}</h3><p class="pj-lead">${project.d}</p>
