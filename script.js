@@ -383,3 +383,10 @@ if (contactForm){
     const r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) / r.width * 100 + '%'); c.style.setProperty('--my', (e.clientY - r.top) / r.height * 100 + '%');
   }));
 })();
+
+// Show the system cursor over the projects globe and its modal (custom cursor sits behind them)
+(() => {
+  const toggle = e => document.body.classList.toggle('native-cursor', !!e.target.closest('.pj-stage, .pj-modal'));
+  document.addEventListener('mouseover', toggle);
+  document.addEventListener('mouseleave', () => document.body.classList.remove('native-cursor'));
+})();
