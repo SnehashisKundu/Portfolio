@@ -680,3 +680,12 @@ body.in-pj .cursor-ring[data-label="OPEN"]::after,body.in-pj .cursor-ring[data-l
 
 .cursor-dot,.cursor-ring{ will-change:transform; }
 .pj-modal{ backdrop-filter:none!important; background:rgba(5,8,22,.88)!important; }
+
+/* Project modal: slim themed scrollbar (follows each project's accent colour) */
+.pj-card{ scrollbar-width:thin; scrollbar-color:var(--pj-acc) transparent; }
+.pj-card::-webkit-scrollbar{ width:10px; }
+.pj-card::-webkit-scrollbar-track{ margin:18px 0; border-radius:10px; background:rgba(255,255,255,.04); }
+.pj-card::-webkit-scrollbar-thumb{ border:3px solid transparent; border-radius:10px; background:linear-gradient(var(--pj-acc),color-mix(in srgb,var(--pj-acc) 40%,#0b0f14)) padding-box; transition:background .3s; }
+.pj-card::-webkit-scrollbar-thumb:hover{ background:var(--pj-acc) padding-box; border-width:2px; }
+.pj-card::-webkit-scrollbar-corner{ background:transparent; }
+.pj-card,.pj-left,.pj-right{ overscroll-behavior:contain; }
