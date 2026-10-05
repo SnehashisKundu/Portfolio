@@ -343,3 +343,27 @@ if (contactForm){
     }
   });
 }
+// =========================================================
+// Polish: spotlight on cards, magnetic buttons, title underline
+// =========================================================
+(() => {
+  const fine = matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (fine) {
+    document.querySelectorAll('.experience-card, .cert-badge').forEach(card => {
+      card.addEventListener('pointermove', e => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) / r.width * 100 + '%');
+        card.style.setProperty('--my', (e.clientY - r.top) / r.height * 100 + '%');
+      });
+    });
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('pointermove', e => {
+        const r = btn.getBoundingClientRect();
+        btn.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .15}px, ${(e.clientY - r.top - r.height / 2) * .25}px)`;
+      });
+      btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
+    });
+  }
+  const titleObserver = new IntersectionObserver((entries, o) => entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in-view'); o.unobserve(en.target); } }), { threshold: .6 });
+  document.querySelectorAll('.section-title').forEach(t => titleObserver.observe(t));
+})();
