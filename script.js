@@ -256,6 +256,20 @@ skillGroups.forEach(group => {
   groupObserver.observe(group);
 });
 
+// Skill panels: cursor spotlight, subtle 3D tilt, top-edge reveal
+skillGroups.forEach(group => {
+  new IntersectionObserver((entries, observer) => {
+    if (entries[0].isIntersecting) { group.classList.add('in-view'); observer.disconnect(); }
+  }, { threshold:0.3 }).observe(group);
+  if (matchMedia('(hover:none), (prefers-reduced-motion: reduce)').matches) return;
+  group.addEventListener('pointermove', e => {
+    const r = group.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    group.style.setProperty('--mx', x * 100 + '%'); group.style.setProperty('--my', y * 100 + '%');
+    group.style.transform = `rotateX(${(.5 - y) * 5}deg) rotateY(${(x - .5) * 7}deg) translateY(-4px)`;
+  });
+  group.addEventListener('pointerleave', () => { group.style.transform = ''; });
+});
+
 // =========================================================
 // About stat counters
 // =========================================================
