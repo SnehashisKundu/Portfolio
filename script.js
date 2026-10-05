@@ -367,3 +367,19 @@ if (contactForm){
   const titleObserver = new IntersectionObserver((entries, o) => entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in-view'); o.unobserve(en.target); } }), { threshold: .6 });
   document.querySelectorAll('.section-title').forEach(t => titleObserver.observe(t));
 })();
+
+// Education timeline: path fills with scroll, markers light up as reached, card spotlight
+(() => {
+  const tl = document.querySelector('.timeline');
+  if (!tl) return;
+  const items = [...tl.querySelectorAll('.timeline-item')];
+  const update = () => {
+    const r = tl.getBoundingClientRect(), vh = innerHeight;
+    tl.style.setProperty('--tl', Math.max(0, Math.min(1, (vh * .6 - r.top) / r.height)).toFixed(3));
+    items.forEach(item => item.classList.toggle('reached', item.querySelector('.timeline-marker').getBoundingClientRect().top < vh * .6));
+  };
+  addEventListener('scroll', update, { passive:true }); addEventListener('resize', update); update();
+  if (matchMedia('(hover:hover) and (pointer:fine)').matches) tl.querySelectorAll('.timeline-content').forEach(c => c.addEventListener('pointermove', e => {
+    const r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) / r.width * 100 + '%'); c.style.setProperty('--my', (e.clientY - r.top) / r.height * 100 + '%');
+  }));
+})();

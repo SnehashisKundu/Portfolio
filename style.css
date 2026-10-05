@@ -614,3 +614,52 @@ html{ scroll-behavior:smooth; }
   .section-title::after{ transform:scaleX(1); transition:none; }
   html{ scroll-behavior:auto; }
 }
+
+/* =========================================================
+   Education: git-log timeline with scroll-driven path
+========================================================= */
+.timeline{ --tl:0; max-width:880px; }
+.timeline::before{ animation:none; transform:none; background:var(--line); }
+.timeline::after{
+  content:""; position:absolute; left:28px; top:10px; width:3px; height:calc((100% - 20px) * var(--tl)); border-radius:3px;
+  background:linear-gradient(var(--accent-2),var(--accent)); box-shadow:0 0 14px rgba(79,209,197,.7);
+}
+.timeline-item{ margin-bottom:44px; }
+.timeline-item.reveal{ transform:translateX(-30px); filter:blur(6px); transition:opacity .8s var(--ease), transform .8s var(--ease), filter .8s var(--ease); }
+.timeline-item.reveal.in-view{ transform:none; filter:none; }
+.timeline-item:hover{ transform:none; }
+.timeline-marker{ left:20px; width:18px; height:18px; top:20px; background:var(--bg); border-color:var(--line); transition:background .4s, border-color .4s, transform .4s; animation:none; }
+.timeline-item.reached .timeline-marker{ background:var(--accent-2); border-color:var(--accent-2); transform:scale(1.15); animation:markerPing 2.8s ease-out infinite; }
+.timeline-item:first-child.reached .timeline-marker{ background:var(--accent); border-color:var(--accent); }
+.timeline-content{
+  position:relative; overflow:hidden; padding:22px 24px; border:1px solid var(--line); border-radius:14px;
+  background:linear-gradient(160deg,rgba(19,27,36,.92),rgba(11,15,20,.55));
+  transition:transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
+}
+.timeline-content::before{
+  content:""; position:absolute; left:0; top:18px; bottom:18px; width:3px; border-radius:3px;
+  background:linear-gradient(var(--accent-2),var(--accent)); transform:scaleY(0); transform-origin:top; transition:transform .5s var(--ease);
+}
+.timeline-content::after{
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity .35s var(--ease);
+  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),rgba(79,209,197,.12),transparent 60%);
+}
+.timeline-content:hover{ transform:translateX(6px); border-color:rgba(79,209,197,.45); box-shadow:0 18px 44px -22px rgba(79,209,197,.4); }
+.timeline-content:hover::before{ transform:scaleY(1); }
+.timeline-content:hover::after{ opacity:1; }
+.timeline-img{ width:84px; height:84px; border-radius:12px; }
+.timeline-content h3{ font-size:1.25rem; }
+.tl-top{ display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.tl-hash{ padding:2px 8px; border-radius:4px; background:rgba(242,184,75,.1); color:var(--accent); font-size:.7rem; }
+.tl-badge{ padding:2px 10px; border:1px solid var(--line); border-radius:999px; color:var(--text-dim); font-size:.7rem; }
+.tl-live{ border-color:rgba(79,209,197,.5); color:var(--accent-2); position:relative; padding-left:22px; }
+.tl-live::before{ content:""; position:absolute; left:9px; top:50%; width:6px; height:6px; margin-top:-3px; border-radius:50%; background:var(--accent-2); animation:labelPing 1.8s ease-out infinite; }
+.tl-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.tl-tags span{ padding:4px 12px; border:1px solid var(--line); border-radius:999px; color:var(--text-dim); font-size:.76rem; opacity:0; transform:translateY(8px); transition:opacity .5s var(--ease), transform .5s var(--ease), border-color .25s, color .25s; }
+.timeline-item.in-view .tl-tags span{ opacity:1; transform:none; }
+.timeline-item.in-view .tl-tags span:nth-child(2){ transition-delay:.1s; }
+.timeline-item.in-view .tl-tags span:nth-child(3){ transition-delay:.2s; }
+.timeline-item.in-view .tl-tags span:nth-child(4){ transition-delay:.3s; }
+.tl-tags span:hover{ border-color:var(--accent); color:var(--accent); }
+@media (max-width:600px){ .timeline-item{ padding-left:56px; } .timeline-content{ flex-direction:column; padding:18px; } .timeline::after,.timeline::before{ left:20px; } .timeline-marker{ left:12px; } }
+@media (prefers-reduced-motion:reduce){ .timeline-item.reveal{ transform:none; filter:none; } .tl-tags span{ opacity:1; transform:none; } .timeline::after{ height:calc(100% - 20px); } }
