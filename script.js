@@ -384,9 +384,17 @@ if (contactForm){
   }));
 })();
 
-// Show the system cursor over the projects globe and its modal (custom cursor sits behind them)
+// Projects globe + modal: switch to the highlighted cursor and label what a click will do
 (() => {
-  const toggle = e => document.body.classList.toggle('native-cursor', !!e.target.closest('.pj-stage, .pj-modal'));
-  document.addEventListener('mouseover', toggle);
-  document.addEventListener('mouseleave', () => document.body.classList.remove('native-cursor'));
+  const ring = document.getElementById('cursorRing');
+  if (!ring) return;
+  document.addEventListener('mousemove', e => {
+    const t = e.target, stage = t.closest && t.closest('.pj-stage'), modal = t.closest && t.closest('.pj-modal');
+    document.body.classList.toggle('in-pj', !!(stage || modal));
+    let label = '';
+    if (stage) label = (t.closest('#pjCanvas') && t.closest('.pj-stage').style.cursor === 'pointer') ? 'OPEN' : 'DRAG';
+    else if (modal) label = t.closest('a, button') ? (t.closest('.pj-close') ? 'CLOSE' : 'GO') : '';
+    if (ring.dataset.label !== label) ring.dataset.label = label;
+  });
+  document.addEventListener('mouseleave', () => document.body.classList.remove('in-pj'));
 })();
