@@ -35,15 +35,13 @@ if (window.matchMedia('(pointer: fine)').matches && cursorDot && cursorRing){
 
   window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX; mouseY = e.clientY;
-    cursorDot.style.left = mouseX + 'px';
-    cursorDot.style.top = mouseY + 'px';
+    cursorDot.style.transform = `translate3d(${mouseX}px,${mouseY}px,0) translate(-50%,-50%)`;
   });
 
   function animateRing(){
-    ringX += (mouseX - ringX) * 0.18;
-    ringY += (mouseY - ringY) * 0.18;
-    cursorRing.style.left = ringX + 'px';
-    cursorRing.style.top = ringY + 'px';
+    ringX += (mouseX - ringX) * 0.3;
+    ringY += (mouseY - ringY) * 0.3;
+    cursorRing.style.transform = `translate3d(${ringX}px,${ringY}px,0) translate(-50%,-50%)`;
     requestAnimationFrame(animateRing);
   }
   animateRing();
@@ -388,8 +386,12 @@ if (contactForm){
 (() => {
   const ring = document.getElementById('cursorRing');
   if (!ring) return;
+  let lastT = null, lastCur = '';
   document.addEventListener('mousemove', e => {
-    const t = e.target, stage = t.closest && t.closest('.pj-stage'), modal = t.closest && t.closest('.pj-modal');
+    const t = e.target;
+    const cur = t.closest && t.closest('.pj-stage') ? t.closest('.pj-stage').style.cursor : '';
+    if (t === lastT && cur === lastCur) return; lastT = t; lastCur = cur;
+    const stage = t.closest && t.closest('.pj-stage'), modal = t.closest && t.closest('.pj-modal');
     document.body.classList.toggle('in-pj', !!(stage || modal));
     let label = '';
     if (stage) label = (t.closest('#pjCanvas') && t.closest('.pj-stage').style.cursor === 'pointer') ? 'OPEN' : 'DRAG';
